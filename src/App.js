@@ -1,7 +1,7 @@
 import './App.css';
 import React, {useState, useEffect} from "react";
 
-function Row({intitial}) {
+function Row({intitial, updatePokemon}) {
   const [pokemon, setPokemon] = useState("");
   const [imgNum, setImgNum] = useState("");
   const [stats, setStats] = useState(null);
@@ -23,6 +23,8 @@ function Row({intitial}) {
       setDisplayName(pokemon);
     })
     .catch();
+
+    updatePokemon(pokemon);
   };
 
   useEffect( () => {
@@ -41,7 +43,7 @@ function Row({intitial}) {
           <div className='d-flex justify-content-center text-center'> {/* contain and center: title, img */}
             <div> {/* container to keep everything in col */}
             <form onSubmit={handleSubmit}>
-              <input className='form-control mt-2' type={'search'} onChange={handleChange} placeholder='Search for a Pokèmon'/>
+              <input className='form-control mt-2' type={'search'} onChange={handleChange} placeholder='Search for a Pokémon'/>
             </form>
             <h1 className='display-5 text-capitalize mt-2'>{displayName}</h1>
             <img className='img-fluid my-3' style={{height: "6.25rem"}} src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-v/black-white/animated/${imgNum}.gif`} alt=''/>
@@ -79,15 +81,28 @@ function Row({intitial}) {
   );
 }
 
+
+function CompareStats({pokemon1, pokemon2, pokemon3}) {
+
+}
+
 function App() {
+
+  const [pokemon, setPokemon] = useState([]);
+
+  const updatePokemon = (p) => {
+    setPokemon([...pokemon, p]);
+    console.log(pokemon)
+  };
+
   return (
     <div>
       <div className='App'>
         <h3 className='display-3 text-center'>Pokémon Compare</h3>
         <div className='row row-cols-sm-1 row-cols-md-1 row-cols-lg-3 mx-auto px-4 mt-5'> {/*row */}
-          <Row intitial={"charmander"}/>
-          <Row intitial={"charmeleon"}/>
-          <Row intitial={"charizard"}/>
+          <Row intitial={"charmander"} updatePokemon={updatePokemon}/>
+          <Row intitial={"charmeleon"} updatePokemon={updatePokemon}/>
+          <Row intitial={"charizard"} updatePokemon={updatePokemon}/>
         </div>
       </div>
       <footer className="footer mt-auto py-3 custom-footer text-center">
