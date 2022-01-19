@@ -1,23 +1,100 @@
-import logo from './logo.svg';
 import './App.css';
+import React, {useState, useEffect} from "react";
+
+function Row({intitial}) {
+  const [pokemon, setPokemon] = useState("");
+  const [imgNum, setImgNum] = useState("");
+  const [stats, setStats] = useState(null);
+  const [displayName, setDisplayName] = useState("");
+  const [s, _] = useState(["hp", "attack", "defense", "sp. attack", "sp. defense", "speed"]);
+
+  const handleChange = (e) => {
+    setPokemon(e.target.value)
+  };
+  
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    fetch(`https://pokeapi.co/api/v2/pokemon/${pokemon}/`)
+    .then((p) => p.json())
+    .then((p) => {
+      setImgNum(p.id); ;
+      setStats(p.stats);
+      setDisplayName(pokemon);
+    })
+    .catch();
+  };
+
+  useEffect( () => {
+    fetch(`https://pokeapi.co/api/v2/pokemon/${intitial}/`)
+    .then((p) => p.json())
+    .then((p) => {
+      setImgNum(p.id);
+      setStats(p.stats)
+      setDisplayName(intitial)
+    })
+    .catch()
+  }, []);
+
+  return (
+    <div className='col custom-border '> {/* col 1 */}
+          <div className='d-flex justify-content-center text-center'> {/* contain and center: title, img */}
+            <div> {/* container to keep everything in col */}
+            <form onSubmit={handleSubmit}>
+              <input className='form-control mt-2' type={'search'} onChange={handleChange} placeholder='Search for a Pokèmon'/>
+            </form>
+            <h1 className='display-5 text-capitalize mt-2'>{displayName}</h1>
+            <img className='img-fluid my-3' style={{height: "6.25rem"}} src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-v/black-white/animated/${imgNum}.gif`} alt=''/>
+            </div>
+          </div>
+          <div> {/* table container */}
+            <div className='row px-4'>
+              <table className="table">
+                <thead>
+                  <tr>
+                    <th scope="col">Stat</th>
+                    <th scope="col">Value</th>
+                    <th scope="col">Range</th>
+                    <th scope="col"></th>
+                    <th scope="col"></th>
+                    <th scope="col"></th>
+                    <th scope="col"></th>
+                    <th scope="col"></th>
+                    <th scope="col"></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {s.map((stat,index) => (
+                    <tr key={index}>
+                      <th scope="row" className='text-capitalize'>{stat}</th>
+                      <td>{stats && stats[index].base_stat}</td>
+                      <td colSpan={"7"} ><div className='mt-1' style={stats &&{ width: stats[index].base_stat > 100 ? "99%" : `${stats[index].base_stat / 100 * 100}%`, borderRadius:"10px", height:"15px", backgroundColor:`${stats[index].base_stat <= 50 ? "orange" : stats[index].base_stat <90 && stats[index].base_stat>50 ? "yellow" : stats[index].base_stat >=90 ? "green" : "black"}`}}></div></td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div> {/* end table row */}
+          </div> {/* end table container */}
+        </div> 
+  );
+}
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <div className='App'>
+        <h3 className='display-3 text-center'>Pokémon Compare</h3>
+        <div className='row row-cols-sm-1 row-cols-md-1 row-cols-lg-3 mx-auto px-4 mt-5'> {/*row */}
+          <Row intitial={"charmander"}/>
+          <Row intitial={"charmeleon"}/>
+          <Row intitial={"charizard"}/>
+        </div>
+      </div>
+      <footer className="footer mt-auto py-3 custom-footer text-center">
+        <div className="container">
+          <span className="text-muted">David Hotaran, 2022</span>
+        </div>
+      </footer>
     </div>
   );
 }
