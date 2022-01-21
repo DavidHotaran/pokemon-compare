@@ -21,7 +21,6 @@ function AutoComplete({setImgNum, setStats, setDisplayName, updatePokemon, index
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // setKeyIndex(0)
 
     fetch(`https://pokeapi.co/api/v2/pokemon/${pokemon}/`)
     .then((p) => p.json())
@@ -30,42 +29,44 @@ function AutoComplete({setImgNum, setStats, setDisplayName, updatePokemon, index
       setStats(p.stats);
       setDisplayName(pokemon);
       updatePokemon({name:pokemon, stats:p.stats, imgNum:p.id}, index);
-      setSuggestion("");
+      setSuggestion([""]);
     })
     .catch();
   };
 
   const handleKey = (e) => {
-
-    if (e.keyCode  === 13){
-      console.log("ENTER")
+    
+    if (e.keyCode  === 8){ //backspace reset index
+      setKeyIndex(0)
+    }
+    if (e.keyCode  === 13){ //enter, set pokemon, reset index
       setPokemon(suggestion[keyIndex])
       setKeyIndex(0)
-    } 
-    if (e.keyCode  === 9){
-      console.log("TAB")
     } 
     if (e.keyCode  === 38){ //up arrow
       if(keyIndex === 0) return;
       setKeyIndex(keyIndex -1)
+      setPokemon(suggestion[keyIndex-1])
     } 
     if (e.keyCode === 40){ //down arrow
-      // console.log(`keyIndex: ${keyIndex}, keyIndex -1: ${keyIndex -1}, suggestion.length: ${suggestion.length}`)
      if(keyIndex === suggestion.length-1){
        return
      }
       setKeyIndex(keyIndex+1)
-    } 
+      setPokemon(suggestion[keyIndex+1])
+    }
   }
 
   return(
     <div>
       <form onSubmit={handleSubmit} >
+        {console.log(suggestion)}
               <input className='form-control mt-2' type={'search'} value={pokemon} onChange={handleChange} placeholder="Search for a Pokemon" onKeyDown={handleKey}/>
             </form>
-            {pokemon.length >=1 && <ul className='suggestions'>
-              {pokemon.length >=1 && suggestion.length >=1 && suggestion.map((pokemon, index) => (
-                <li key={index} className={index === keyIndex ? "suggestion-active" : ""}>
+            {pokemon.length >=1 && suggestion.length >=1 && 
+            <ul className='suggestions'>
+              {suggestion.map((pokemon, index) => (
+                <li key={index} className={index === keyIndex ? "suggestion-active" : ""} onClick={()=>{}}>
                 {pokemon}
                 </li>
               ))}
