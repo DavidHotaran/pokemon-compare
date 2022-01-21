@@ -1,19 +1,27 @@
 import './App.css';
 import React, {useState, useEffect} from "react";
+import getData from './data';
 
-function Row({intitial, updatePokemon, index}) {
+function AutoComplete({setImgNum, setStats, setDisplayName, updatePokemon, index}){
+  const [suggestion, setSuggestion] = useState([]);
   const [pokemon, setPokemon] = useState("");
-  const [imgNum, setImgNum] = useState("");
-  const [stats, setStats] = useState(null);
-  const [displayName, setDisplayName] = useState("");
-  const [s, _] = useState(["hp", "attack", "defense", "sp. attack", "sp. defense", "speed"]);
-  const options = ["orange", "banana", "apple"];
+  const [keyIndex, setKeyIndex] = useState(0);
 
   const handleChange = (e) => {
-    setPokemon(e.target.value.toLocaleLowerCase())
+    let userInput = e.target.value;
+
+    setPokemon(userInput);
+    const data = getData();
+    let suggest = data.filter(
+      suggestion =>
+        suggestion.toLowerCase().indexOf(userInput.toLowerCase()) > -1
+    ).sort();
+    setSuggestion(suggest);
   };
+
   const handleSubmit = (e) => {
     e.preventDefault();
+    // setKeyIndex(0)
 
     fetch(`https://pokeapi.co/api/v2/pokemon/${pokemon}/`)
     .then((p) => p.json())
@@ -22,10 +30,84 @@ function Row({intitial, updatePokemon, index}) {
       setStats(p.stats);
       setDisplayName(pokemon);
       updatePokemon({name:pokemon, stats:p.stats, imgNum:p.id}, index);
+      setSuggestion("");
     })
     .catch();
-
   };
+
+  const handleKey = (e) => {
+
+    if (e.keyCode  === 13){
+      console.log("ENTER")
+      setPokemon(suggestion[keyIndex])
+      setKeyIndex(0)
+    } 
+    if (e.keyCode  === 9){
+      console.log("TAB")
+    } 
+    if (e.keyCode  === 38){ //up arrow
+      if(keyIndex === 0) return;
+      setKeyIndex(keyIndex -1)
+    } 
+    if (e.keyCode === 40){ //down arrow
+      // console.log(`keyIndex: ${keyIndex}, keyIndex -1: ${keyIndex -1}, suggestion.length: ${suggestion.length}`)
+     if(keyIndex === suggestion.length-1){
+       return
+     }
+      setKeyIndex(keyIndex+1)
+    } 
+  }
+
+  return(
+    <div>
+      <form onSubmit={handleSubmit} >
+              <input className='form-control mt-2' type={'search'} value={pokemon} onChange={handleChange} placeholder="Search for a Pokemon" onKeyDown={handleKey}/>
+            </form>
+            {pokemon.length >=1 && <ul className='suggestions'>
+              {pokemon.length >=1 && suggestion.length >=1 && suggestion.map((pokemon, index) => (
+                <li key={index} className={index === keyIndex ? "suggestion-active" : ""}>
+                {pokemon}
+                </li>
+              ))}
+            </ul>}
+    </div>
+  )
+
+}
+
+function Row({intitial, updatePokemon, index}) {
+  // const [pokemon, setPokemon] = useState("");
+  const [imgNum, setImgNum] = useState("");
+  const [stats, setStats] = useState(null);
+  const [displayName, setDisplayName] = useState("");
+  const STAT = ["hp", "attack", "defense", "sp. attack", "sp. defense", "speed"];
+  // const [place, setPlace] = useState([]);
+
+  // const handleChange = (e) => {
+  //   setPokemon(e.target.value.toLocaleLowerCase())
+
+  //   let userInput = e.target.value
+  //   const data = getData();
+  //   let suggest = data.filter(
+  //     suggestion =>
+  //       suggestion.toLowerCase().indexOf(userInput.toLowerCase()) > -1
+  //   ).sort();
+  //   setPlace(suggest)
+  // };
+
+  // const handleSubmit = (e) => {
+  //   // e.preventDefault();
+
+  //   fetch(`https://pokeapi.co/api/v2/pokemon/${pokemon}/`)
+  //   .then((p) => p.json())
+  //   .then((p) => {
+  //     setImgNum(p.id);
+  //     setStats(p.stats);
+  //     setDisplayName(pokemon);
+  //     updatePokemon({name:pokemon, stats:p.stats, imgNum:p.id}, index);
+  //   })
+  //   .catch();
+  // };
 
   useEffect( () => {
     fetch(`https://pokeapi.co/api/v2/pokemon/${intitial}/`)
@@ -42,9 +124,7 @@ function Row({intitial, updatePokemon, index}) {
     <div className='col custom-border '> {/* col 1 */}
           <div className='d-flex justify-content-center text-center'> {/* contain and center: title, img */}
             <div> {/* container to keep everything in col */}
-            <form onSubmit={handleSubmit}>
-              <input className='form-control mt-2' type={'search'} onChange={handleChange} placeholder='Search for a Pokémon'/>
-            </form>
+            <AutoComplete setImgNum={setImgNum} setStats={setStats} setDisplayName={setDisplayName} updatePokemon={updatePokemon} index={index}/>
             <h1 className='display-5 text-capitalize mt-2'>{displayName}</h1>
             <img className='img-fluid my-3' style={{height: "6.25rem"}} src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-v/black-white/animated/${imgNum}.gif`} alt=''/>
             </div>
@@ -66,7 +146,7 @@ function Row({intitial, updatePokemon, index}) {
                   </tr>
                 </thead>
                 <tbody>
-                  {s.map((stat,index) => (
+                  {STAT.map((stat,index) => (
                     <tr key={index}>
                       <th scope="row" className='text-capitalize'>{stat}</th>
                       <td>{stats && stats[index].base_stat}</td>
@@ -87,7 +167,6 @@ function CompareStats({pokemon}) {
   let [stats, setStats] = useState([]);
   
   useEffect( ()=> {
-    console.log(pokemon)
     doCompare();
   }, [pokemon])
 
