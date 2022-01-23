@@ -7,7 +7,7 @@ export default function CompareStats({pokemon}) {
     
     useEffect( ()=> {
       doCompare();
-    }, [pokemon])
+    }, [pokemon]);
   
   
     /* Get 3 stats, return highest stat and which Pokemon that belonged to */
@@ -28,7 +28,7 @@ export default function CompareStats({pokemon}) {
         case 2:
           return pokemon[index].name;
       }
-    }
+    };
   
     /* Entry point to function */
     const doCompare = () => {
@@ -36,20 +36,19 @@ export default function CompareStats({pokemon}) {
         return;
       }
       /* TODO FIND A FIX FOR THIS */
-      let a = []
+      let a = [];
       for(let i = 0; i < 6; i++) {
         let [stat, index] = compare([pokemon[0].stats[i].base_stat, pokemon[1].stats[i].base_stat, pokemon[2].stats[i].base_stat]);
-        let name = pokemon[0].stats[i].stat.name
+        let name = pokemon[0].stats[i].stat.name;
         let imgNum = pokemon[index].imgNum;
         let img = imgNum > 649 ? `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${imgNum}.png` 
-                                 : `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-v/black-white/animated/${imgNum}.gif`
+                               : `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-v/black-white/animated/${imgNum}.gif`;
         /* TODO FIND A FIX FOR THIS */
         let ob = {stat:stat, pokemon:getPokemon(index), name:name, img:img};
-        a.push(ob)
+        a.push(ob);
       }
       /* TODO FIND A FIX FOR THIS */
-      setStats(a)
-  
+      setStats(a);
     }
   
       return(
@@ -63,11 +62,9 @@ export default function CompareStats({pokemon}) {
               <p className='col text-capitalize fw-bold'>{p.stat}</p>
               <img className='col img-fluid' style={{height:"6.25rem"}} src={p.img} alt=''/>
             </div>
-            
           ))}
           </div>
         }
-        </div> 
-         
+        </div>  
       );
-  }
+  };

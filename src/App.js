@@ -4,17 +4,16 @@ import CompareStats from './components/CompareStats';
 import Row from './components/Row';
 
 function App() {
-
+  
   const [pokemon, setPokemon] = useState([]);
 
   const updatePokemon = (p, i) => {
     if(pokemon.length === 3){
       const oldPokemon = [ ...pokemon];
-      oldPokemon[i] = p
-      setPokemon(oldPokemon)
-
+      oldPokemon[i] = p;
+      setPokemon(oldPokemon);
     }else {
-    setPokemon([...pokemon, p])
+    setPokemon([...pokemon, p]);
     }
   };
 
@@ -36,6 +35,6 @@ function App() {
       </footer> */}
     </div>
   );
-}
+};
 
 export default App;
