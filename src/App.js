@@ -2,7 +2,7 @@ import './App.css';
 import React, {useState, useEffect} from "react";
 import getData from './data';
 
-function AutoComplete({setImgNum, setStats, setDisplayName, updatePokemon, index}){
+function AutoComplete({setImg, setStats, setDisplayName, updatePokemon, index}){
   const [suggestion, setSuggestion] = useState([]);
   const [pokemon, setPokemon] = useState("");
   const [keyIndex, setKeyIndex] = useState(0);
@@ -25,7 +25,7 @@ function AutoComplete({setImgNum, setStats, setDisplayName, updatePokemon, index
     fetch(`https://pokeapi.co/api/v2/pokemon/${pokemon}/`)
     .then((p) => p.json())
     .then((p) => {
-      setImgNum(p.id);
+      setImg(p.id > 649 ? `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${p.id}.png` : `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-v/black-white/animated/${p.id}.gif`);
       setStats(p.stats);
       setDisplayName(pokemon);
       updatePokemon({name:pokemon, stats:p.stats, imgNum:p.id}, index);
@@ -60,13 +60,12 @@ function AutoComplete({setImgNum, setStats, setDisplayName, updatePokemon, index
   return(
     <div>
       <form onSubmit={handleSubmit} >
-        {console.log(suggestion)}
               <input className='form-control mt-2' type={'search'} value={pokemon} onChange={handleChange} placeholder="Search for a Pokemon" onKeyDown={handleKey}/>
             </form>
             {pokemon.length >=1 && suggestion.length >=1 && 
             <ul className='suggestions'>
               {suggestion.map((pokemon, index) => (
-                <li key={index} className={index === keyIndex ? "suggestion-active" : ""} onClick={()=>{}}>
+                <li key={index} className={index === keyIndex ? "suggestion-active" : ""} >
                 {pokemon}
                 </li>
               ))}
@@ -77,44 +76,16 @@ function AutoComplete({setImgNum, setStats, setDisplayName, updatePokemon, index
 }
 
 function Row({intitial, updatePokemon, index}) {
-  // const [pokemon, setPokemon] = useState("");
-  const [imgNum, setImgNum] = useState("");
   const [stats, setStats] = useState(null);
   const [displayName, setDisplayName] = useState("");
   const STAT = ["hp", "attack", "defense", "sp. attack", "sp. defense", "speed"];
-  // const [place, setPlace] = useState([]);
-
-  // const handleChange = (e) => {
-  //   setPokemon(e.target.value.toLocaleLowerCase())
-
-  //   let userInput = e.target.value
-  //   const data = getData();
-  //   let suggest = data.filter(
-  //     suggestion =>
-  //       suggestion.toLowerCase().indexOf(userInput.toLowerCase()) > -1
-  //   ).sort();
-  //   setPlace(suggest)
-  // };
-
-  // const handleSubmit = (e) => {
-  //   // e.preventDefault();
-
-  //   fetch(`https://pokeapi.co/api/v2/pokemon/${pokemon}/`)
-  //   .then((p) => p.json())
-  //   .then((p) => {
-  //     setImgNum(p.id);
-  //     setStats(p.stats);
-  //     setDisplayName(pokemon);
-  //     updatePokemon({name:pokemon, stats:p.stats, imgNum:p.id}, index);
-  //   })
-  //   .catch();
-  // };
-
+  const [img, setImg] = useState("");
+  
   useEffect( () => {
     fetch(`https://pokeapi.co/api/v2/pokemon/${intitial}/`)
     .then((p) => p.json())
     .then((p) => {
-      setImgNum(p.id);
+      setImg(`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-v/black-white/animated/${p.id}.gif`)
       setStats(p.stats)
       setDisplayName(intitial)
     })
@@ -125,9 +96,9 @@ function Row({intitial, updatePokemon, index}) {
     <div className='col custom-border '> {/* col 1 */}
           <div className='d-flex justify-content-center text-center'> {/* contain and center: title, img */}
             <div> {/* container to keep everything in col */}
-            <AutoComplete setImgNum={setImgNum} setStats={setStats} setDisplayName={setDisplayName} updatePokemon={updatePokemon} index={index}/>
+            <AutoComplete setStats={setStats} setDisplayName={setDisplayName} updatePokemon={updatePokemon} index={index} setImg={setImg}/>
             <h1 className='display-5 text-capitalize mt-2'>{displayName}</h1>
-            <img className='img-fluid my-3' style={{height: "6.25rem"}} src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-v/black-white/animated/${imgNum}.gif`} alt=''/>
+            <img className='img-fluid my-3' style={{height: "6.25rem"}} src={img} alt=''/>
             </div>
           </div>
           <div> {/* table container */}
@@ -197,19 +168,21 @@ function CompareStats({pokemon}) {
     if(pokemon.length <= 2){
       return;
     }
-    console.log("doing comparison")
     /* TODO FIND A FIX FOR THIS */
     let a = []
     for(let i = 0; i < 6; i++) {
       let [stat, index] = compare([pokemon[0].stats[i].base_stat, pokemon[1].stats[i].base_stat, pokemon[2].stats[i].base_stat]);
       let name = pokemon[0].stats[i].stat.name
+      let imgNum = pokemon[index].imgNum;
+      let img = imgNum > 649 ? `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${imgNum}.png` 
+                               : `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-v/black-white/animated/${imgNum}.gif`
       /* TODO FIND A FIX FOR THIS */
-      let ob = {stat:stat, pokemon:getPokemon(index), name:name, imgNum:pokemon[index].imgNum};
+      let ob = {stat:stat, pokemon:getPokemon(index), name:name, img:img};
       a.push(ob)
     }
     /* TODO FIND A FIX FOR THIS */
     setStats(a)
-    console.log("done")
+
   }
 
     return(
@@ -218,7 +191,7 @@ function CompareStats({pokemon}) {
           <div className='row d-flex align-items-center' key={i}>
             <p className='col text-capitalize fw-bold'>{p.name}</p>
             <p className='col text-capitalize fw-bold'>{p.stat}</p>
-            <img className='col img-fluid' style={{height:"6.25rem"}} src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-v/black-white/animated/${p.imgNum}.gif`} alt=''/>
+            <img className='col img-fluid' style={{height:"6.25rem"}} src={p.img} alt=''/>
           </div>
           
         ))}
@@ -235,11 +208,9 @@ function App() {
       const oldPokemon = [ ...pokemon];
       oldPokemon[i] = p
       setPokemon(oldPokemon)
-      console.log("APP", pokemon)
 
     }else {
     setPokemon([...pokemon, p])
-    console.log("APP", pokemon)
     }
   };
 
