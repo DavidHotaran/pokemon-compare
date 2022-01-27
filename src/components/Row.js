@@ -29,7 +29,7 @@ export default function Row({intitial, updatePokemon, index}) {
                 <h3 className='display-5 text-capitalize mt-2'>{displayName}</h3>
                 {type.map((type, index) => (
                   <div key={index} style={{display:"inline"}}>
-                    <img src={`pokemon-compare/images/${type}.png `} className="img-fluid border rounded-3 shadow-lg my-4" alt="nothing here" loading="lazy"/>
+                    <img src={`/images/${type}.png`} className="img-fluid border rounded-3 shadow-lg my-4" alt="nothing here" loading="lazy"/>
                   </div>
                 ))}
                 <div className='pkm-container d-flex align-items-center justify-content-center' >
