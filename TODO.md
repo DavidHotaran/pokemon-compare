@@ -1,8 +1,9 @@
 # Future feature planning
 
+- [ ] Make a logo
 - [ ] Get types from JSON and preview next to name
 - [ ] Adjust comparison algorithm to account for ties
-- [ ] Figure out how to auto scroll and adjust height on autocomplete component
+- [ ] Figure out how to auto scroll and adjust height on autocomplete component (MAKE IT A SELECT TAG INSTEAD OF UL AND LI????? )
 - [ ] Add react-router
     - [ ] Add route for single pokemon
     - [ ] Add UI for single pokemon

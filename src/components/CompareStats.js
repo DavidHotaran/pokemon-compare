@@ -9,7 +9,6 @@ export default function CompareStats({pokemon}) {
       doCompare();
     }, [pokemon]);
   
-  
     /* Get 3 stats, return highest stat and which Pokemon that belonged to */
     const compare = (stat) => {
       let highestStat = Math.max(...stat);
@@ -67,4 +66,4 @@ export default function CompareStats({pokemon}) {
         }
         </div>  
       );
-  };
+};
