@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/pokemon-compare/static/css/main.51615a25.css",
-    "main.js": "/pokemon-compare/static/js/main.a71a9e5b.js",
+    "main.js": "/pokemon-compare/static/js/main.d13a0682.js",
     "index.html": "/pokemon-compare/index.html",
     "main.51615a25.css.map": "/pokemon-compare/static/css/main.51615a25.css.map",
-    "main.a71a9e5b.js.map": "/pokemon-compare/static/js/main.a71a9e5b.js.map"
+    "main.d13a0682.js.map": "/pokemon-compare/static/js/main.d13a0682.js.map"
   },
   "entrypoints": [
     "static/css/main.51615a25.css",
-    "static/js/main.a71a9e5b.js"
+    "static/js/main.d13a0682.js"
   ]
 }
