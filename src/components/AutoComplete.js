@@ -2,7 +2,7 @@ import '../App.css';
 import React, {useState} from "react";
 import getData from '../data';
 
-export default function AutoComplete({setImg, setStats, setDisplayName, updatePokemon, index}){
+export default function AutoComplete({setImg, setStats, setDisplayName, updatePokemon, index, setType}){
     const [suggestion, setSuggestion] = useState([]);
     const [pokemon, setPokemon] = useState("");
     const [keyIndex, setKeyIndex] = useState(0);
@@ -29,6 +29,7 @@ export default function AutoComplete({setImg, setStats, setDisplayName, updatePo
         setStats(p.stats);
         setDisplayName(pokemon);
         updatePokemon({name:pokemon, stats:p.stats, imgNum:p.id}, index);
+        setType(p.types.map((type) => (type.type.name)))
         setSuggestion([""]);
         setPokemon("")
       })
@@ -43,6 +44,7 @@ export default function AutoComplete({setImg, setStats, setDisplayName, updatePo
         setStats(p.stats);
         setDisplayName(pokemon);
         updatePokemon({name:pokemon, stats:p.stats, imgNum:p.id}, index);
+        setType(p.types.map((type) => (type.type.name)))
         setSuggestion([""]);
         setPokemon("")
       })

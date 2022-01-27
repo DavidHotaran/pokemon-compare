@@ -1,8 +1,7 @@
 # Future feature planning
 
-- [ ] Redo pokemon comparison to display in a row rather than column? At least for larger screens   
 - [ ] Make a logo
-- [ ] Get types from JSON and preview next to name
+- [x] Get types from JSON and preview next to name
 - [ ] Adjust comparison algorithm to account for ties
 - [ ] Figure out how to auto scroll and adjust height on autocomplete component (MAKE IT A SELECT TAG INSTEAD OF UL AND LI????? )
 - [ ] Add react-router
