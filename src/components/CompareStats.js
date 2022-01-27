@@ -58,9 +58,9 @@ export default function CompareStats({pokemon}) {
              {stats.map((p,i) => (
             <div className=' d-flex justify-content-center' key={i}>
               <div className='pkm-container d-flex align-items-center'>
-              <p className='col-3 text-capitalize fw-bold'>{p.name}</p>
-              <p className='col-3 text-capitalize fw-bold'>{p.stat}</p>
-              <img className='col-3 img-fluid' src={p.img} alt=''/>
+              <p className='col-6 text-capitalize fw-bold'>{p.name}</p>
+              <p className='col-4 text-capitalize fw-bold'>{p.stat}</p>
+              <img className='col-2 img-fluid' src={p.img} alt=''/>
               </div>
             </div>
           ))}

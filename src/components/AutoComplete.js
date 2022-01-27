@@ -30,6 +30,7 @@ export default function AutoComplete({setImg, setStats, setDisplayName, updatePo
         setDisplayName(pokemon);
         updatePokemon({name:pokemon, stats:p.stats, imgNum:p.id}, index);
         setSuggestion([""]);
+        setPokemon("")
       })
       .catch();
     };
@@ -43,6 +44,7 @@ export default function AutoComplete({setImg, setStats, setDisplayName, updatePo
         setDisplayName(pokemon);
         updatePokemon({name:pokemon, stats:p.stats, imgNum:p.id}, index);
         setSuggestion([""]);
+        setPokemon("")
       })
       .catch();
     }
