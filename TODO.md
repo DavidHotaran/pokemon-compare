@@ -1,3 +1,7 @@
+# Notes about app
+* To display images locally, need to prefix img url with pokemon-app e.g pokemon-compare/images/[img]
+* To display on gh-pages, do not prefix with anything, e.g /images/[img]
+
 # Future feature planning
 
 - [ ] Make a logo
