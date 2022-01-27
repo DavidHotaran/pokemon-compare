@@ -1,5 +1,6 @@
 # Future feature planning
 
+- [ ] Redo pokemon comparison to display in a row rather than column? At least for larger screens   
 - [ ] Make a logo
 - [ ] Get types from JSON and preview next to name
 - [ ] Adjust comparison algorithm to account for ties
@@ -8,6 +9,5 @@
     - [ ] Add route for single pokemon
     - [ ] Add UI for single pokemon
         - [ ] Movesets & abilities & types
-- [ ] Add submit button to form input searching for pokemon
+- [x] Add submit button to form input searching for pokemon
 - [ ] Take care of user input errors and don't allow submission if so
-- [ ] Redo pokemon comparison to display in a row rather than column? At least for larger screens   
