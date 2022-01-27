@@ -23,9 +23,12 @@ export default function Row({intitial, updatePokemon, index}) {
       <div className='col custom-border '> {/* col 1 */}
             <div className='d-flex justify-content-center text-center'> {/* contain and center: title, img */}
               <div> {/* container to keep everything in col */}
-              <AutoComplete setStats={setStats} setDisplayName={setDisplayName} updatePokemon={updatePokemon} index={index} setImg={setImg}/>
-              <h1 className='display-5 text-capitalize mt-2'>{displayName}</h1>
-              <img className='img-fluid my-3' style={{height: "6.25rem"}} src={img} alt=''/>
+                <AutoComplete setStats={setStats} setDisplayName={setDisplayName} updatePokemon={updatePokemon} index={index} setImg={setImg}/>
+                <h1 className='display-5 text-capitalize mt-2'>{displayName}</h1>
+                <div  className=' pkm-container d-flex align-items-center justify-content-center' >
+                  <img className='img-fluid' src={img} alt=''/>
+                </div>
+
               </div>
             </div>
             <div> {/* table container */}

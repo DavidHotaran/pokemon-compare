@@ -59,7 +59,7 @@ export default function CompareStats({pokemon}) {
             <div className='row d-flex align-items-center' key={i}>
               <p className='col text-capitalize fw-bold'>{p.name}</p>
               <p className='col text-capitalize fw-bold'>{p.stat}</p>
-              <img className='col img-fluid' style={{height:"6.25rem"}} src={p.img} alt=''/>
+              <img className='col img-fluid' src={p.img} alt=''/>
             </div>
           ))}
           </div>

@@ -33,3 +33,10 @@
   cursor: pointer;
   font-weight: 700;
 }
+
+.pkm-container {
+    width: 18.75rem;
+    height: 6.25rem;  
+    box-sizing: border-box;
+}
+  
