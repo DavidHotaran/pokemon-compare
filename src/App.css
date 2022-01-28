@@ -24,14 +24,17 @@
     max-height: 6rem;
     overflow-y: auto;
     padding-left: 0;
+    background-color: white;
+    position: absolute;
+    width: 12.9rem;
  }
 
 .suggestion-active,
 .suggestions li:hover {
-  background-color: #008f68;
-  color: #fae042;
   cursor: pointer;
-  font-weight: 700;
+  font-weight: 700;  
+  border-style: solid;
+  border-color: #3498DB;
 }
 
 .pkm-container {

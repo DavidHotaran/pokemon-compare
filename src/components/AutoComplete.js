@@ -62,6 +62,7 @@ export default function AutoComplete({setImg, setStats, setDisplayName, updatePo
       } 
       if (e.keyCode  === 38){ //up arrow
         if(keyIndex === 0) return;
+        document.getElementById("sh").scrollBy(0, -24) //controll scrolling of list results back up
         setKeyIndex(keyIndex -1)
         setPokemon(suggestion[keyIndex-1])
       } 
@@ -69,18 +70,19 @@ export default function AutoComplete({setImg, setStats, setDisplayName, updatePo
        if(keyIndex === suggestion.length-1){
          return
        }
+        document.getElementById("sh").scrollBy(0, 24) //controll scrolling of list results back up
         setKeyIndex(keyIndex+1)
         setPokemon(suggestion[keyIndex+1])
       }
     }
   
     return(
-      <div>
+      <div style={{position:"relative"}}>
         <form class="row g-3 mt-3" onSubmit={handleSubmit}>
           <div class="col-auto" >
             <input className='form-control' type={'search'} value={pokemon} onChange={handleChange} placeholder="Search for a Pokemon" onKeyDown={handleKey} />
-            {pokemon.length >=1 && suggestion.length >=1 && 
-              <ul className='suggestions'>
+              {pokemon.length >=1 && suggestion.length >=1 && 
+              <ul className='suggestions' id="sh">
                 {suggestion.map((pokemon, index) => (
                   <li key={index} className={index === keyIndex ? "suggestion-active" : ""} onClick={() => handleClick(pokemon)}>
                   {pokemon}
