@@ -22,7 +22,7 @@ export default function Row({intitial, updatePokemon, index}) {
     }, []);
   
     return (
-      <div className='col custom-border '> {/* col 1 */}
+      <div className='col'> {/* col 1 */}
             <div className='d-flex justify-content-center text-center'> {/* contain and center: title, img */}
               <div> {/* container to keep everything in col */}
                 <AutoComplete setStats={setStats} setDisplayName={setDisplayName} updatePokemon={updatePokemon} index={index} setImg={setImg} setType={setType}/>

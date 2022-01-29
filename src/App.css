@@ -13,15 +13,13 @@
 
 .App {
     min-height: 100vh;
-    background-color: #FAFAFA;
 }
 
 .suggestions {
-    border: 1px solid #999;
-    border-top-width: 0;
+    border: 4px solid #BFDBFE;
+    border-radius: 8px;
     list-style: none;
-    margin-top: 0;
-    max-height: 6rem;
+    max-height: 8rem;
     overflow-y: auto;
     padding-left: 0;
     background-color: white;
@@ -42,4 +40,3 @@
     height: 6.25rem;  
     box-sizing: border-box;
 }
-  

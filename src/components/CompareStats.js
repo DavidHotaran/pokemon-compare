@@ -54,7 +54,7 @@ export default function CompareStats({pokemon}) {
         <div  className='row row-cols-sm-1 row-cols-md-1 row-cols-lg-3 mx-auto px-4 my-3'>
         {stats.length === 6 && 
         <div className='col mx-auto custom-border'>
-            <h3 className='display-5 text-center mb-3'>Stats Comparison</h3>
+            <h3 className='display-5 text-center mb-3'>Stat Comparison</h3>
              {stats.map((p,i) => (
             <div className=' d-flex justify-content-center' key={i}>
               <div className='pkm-container d-flex align-items-center'>
