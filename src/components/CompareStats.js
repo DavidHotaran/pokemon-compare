@@ -53,7 +53,7 @@ export default function CompareStats({pokemon}) {
       return(
         <div  className='row row-cols-sm-1 row-cols-md-1 row-cols-lg-3 mx-auto px-4 my-3'>
         {stats.length === 6 && 
-        <div className='col mx-auto custom-border'>
+        <div className='col mx-auto shadow shadow rounded bg-body border'>
             <h3 className='display-5 text-center mb-3'>Stat Comparison</h3>
              {stats.map((p,i) => (
             <div className=' d-flex justify-content-center' key={i}>
