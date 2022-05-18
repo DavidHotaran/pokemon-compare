@@ -2,6 +2,7 @@ import '../App.css';
 import React, {useState, useEffect} from "react";
 import AutoComplete from './AutoComplete';
 
+
 export default function Row({intitial, updatePokemon, index}) {
     const [stats, setStats] = useState(null);
     const [displayName, setDisplayName] = useState("");
@@ -25,7 +26,15 @@ export default function Row({intitial, updatePokemon, index}) {
       <div className='col'> {/* col 1 */}
             <div className='d-flex justify-content-center text-center'> {/* contain and center: title, img */}
               <div> {/* container to keep everything in col */}
-                <AutoComplete setStats={setStats} setDisplayName={setDisplayName} updatePokemon={updatePokemon} index={index} setImg={setImg} setType={setType}/>
+                {/* <AutoComplete setStats={setStats} setDisplayName={setDisplayName} updatePokemon={updatePokemon} index={index} setImg={setImg} setType={setType}/> */}
+                <AutoComplete
+                  setStats={setStats} 
+                  setDisplayName={setDisplayName} 
+                  updatePokemon={updatePokemon} 
+                  index={index} 
+                  setImg={setImg} 
+                  setType={setType}
+                />
                 <h3 className='display-5 text-capitalize mt-2'>{displayName}</h3>
                 {type.map((type, index) => (
                   <div key={index} style={{display:"inline"}}>
@@ -38,7 +47,7 @@ export default function Row({intitial, updatePokemon, index}) {
               </div>
             </div>
             <div> {/* table container */}
-              <div className='row px-4'>
+              <div className='row'>
                 <table className="table">
                   <thead>
                     <tr>
